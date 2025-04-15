@@ -700,6 +700,8 @@ class CoreMiniAxiInterface:
 @cocotb.test()
 async def core_mcycle(dut):
     """mcycle example"""
+    log = cocotb.log
+    log.info("Running mcycle example")
     core_mini_axi = CoreMiniAxiInterface(dut)
     await core_mini_axi.init()
     await core_mini_axi.reset()
@@ -710,6 +712,9 @@ async def core_mcycle(dut):
         await core_mini_axi.execute_from(entry_point)
         await core_mini_axi.wait_for_halted()
 
+    log.info("start read mem 0x1ff0")
+    rdata = (await core_mini_axi.read(0x17ff0,8)).view(np.uint32)
+    log.info(f"rdata: {rdata}")
     ##await core_mini_axi.wait_for_wfi()
     ##await core_mini_axi.raise_irq()
     ##await core_mini_axi.wait_for_halted()
