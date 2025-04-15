@@ -7,7 +7,7 @@ MEMORY {
     DTCM(rw): ORIGIN = 0x00010000, LENGTH = 32K
 }
 
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x80;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x800;
 HEAP_SIZE = DEFINED(__heap_size__) ? __heap_size__ : 0x80;
 
 ENTRY(_start)
