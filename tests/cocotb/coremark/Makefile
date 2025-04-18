@@ -2,18 +2,27 @@
 #CC_FLAGS=--target=riscv32-none-eabi -march=rv32im_zicsr -nostdlib -T kelvin_tcm.ld
 CC=riscv32-unknown-elf-gcc
 CC_FLAGS=-march=rv32im_zicsr -nostdlib -T kelvin_tcm.ld
+CC_FLAGS_for_coremark=-march=rv32im_zicsr -nostdlib -T kelvin_tcm32K.ld
 
 all:printf_example.elf
 
 
 mcycle.elf: mcycle.s
-	$(CC) $(CC_FLAGS) -o mcycle.elf mcycle.s kelvin_start.S
+	$(CC) $(CC_FLAGS_for_coremark) -o mcycle.elf mcycle.s kelvin_start.S
+
+program.elf: program.c
+	$(CC) $(CC_FLAGS) -o program.elf program.c kelvin_start.S
+
 printf_example.elf: printf_example.c
 	$(CC) $(CC_FLAGS) -o printf_example.elf printf_example.c kelvin_start.S
 
 timer.elf: timer.c
 	$(CC) $(CC_FLAGS) -o timer.elf timer.c kelvin_start.S
 
+coremark_srcs = src/core_list_join.c src/core_main.c src/core_matrix.c src/core_state.c src/core_util.c src/barebones/core_portme.c src/barebones/core_portme.h src/coremark.h 
+coremark.elf: src/core_list_join.c src/core_main.c src/core_matrix.c src/core_state.c src/core_util.c src/core_portme.c src/core_portme.h src/coremark.h 
+	$(CC) $(CC_FLAGS_for_coremark) -DMAIN_HAS_NOARGC -Wl,-Map=coremark.map -o coremark.elf $^  kelvin_start.S
+
 .PHONY: clean
 clean:
-	rm -rf *.elf
+	rm -rf *.elf *.map

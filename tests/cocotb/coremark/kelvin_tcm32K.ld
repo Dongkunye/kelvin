@@ -3,7 +3,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
 MEMORY {
-    ITCM(rx): ORIGIN = 0x00000000, LENGTH = 8K
+    ITCM(rx): ORIGIN = 0x00000000, LENGTH = 32K
     DTCM(rw): ORIGIN = 0x00010000, LENGTH = 32K
 }
 
