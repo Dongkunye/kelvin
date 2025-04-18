@@ -135,7 +135,7 @@ object EmitCore extends App {
   lazy val core = if (useAxi) {
     if (p.tcmHighmem == false) {   // default case
       val memoryRegions = Seq(
-        new MemoryRegion(0x0000, 0x2000, MemoryRegionType.IMEM), // ITCM
+        new MemoryRegion(0x0000, 0x8000, MemoryRegionType.IMEM), // ITCM
         new MemoryRegion(0x10000, 0x8000, MemoryRegionType.DMEM), // DTCM
         new MemoryRegion(0x30000, 0x2000, MemoryRegionType.Peripheral), // CSR
       )
