@@ -2,7 +2,7 @@
 #CC_FLAGS=--target=riscv32-none-eabi -march=rv32im_zicsr -nostdlib -T kelvin_tcm.ld
 CC=riscv32-unknown-elf-gcc
 CC_FLAGS=-march=rv32im_zicsr -nostdlib -T kelvin_tcm.ld
-CC_FLAGS_for_coremark=-march=rv32im_zicsr -nostdlib -T kelvin_tcm32K.ld
+CC_FLAGS_for_coremark=-march=rv32im_zicsr -nostdlib -T kelvin_tcm32K.ld -O1
 
 all:printf_example.elf
 

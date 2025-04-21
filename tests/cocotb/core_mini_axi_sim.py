@@ -732,22 +732,25 @@ async def core_mark(dut):
         entry_point = await core_mini_axi.load_elf(f)
         await core_mini_axi.execute_from(entry_point)
         await core_mini_axi.wait_for_halted(100000000)
+    log.info("start read mem 0x17ff0")
+    rdata = (await core_mini_axi.read(0x17ff0,8)).view(np.uint32)
+    log.info(f"coremark consume cycyles is : {rdata}")
 
-@cocotb.test()
-async def core_mark(dut):
-    """coremark test"""
-    log = cocotb.log
-    log.info("Running coremark1 test")
-    core_mini_axi = CoreMiniAxiInterface(dut)
-    await core_mini_axi.init()
-    await core_mini_axi.reset()
-    cocotb.start_soon(core_mini_axi.clock.start())
-
-    with open("../tests/cocotb/coremark/printf_example.elf", "rb") as f:
-        entry_point = await core_mini_axi.load_elf(f)
-        await core_mini_axi.execute_from(entry_point)
-        await core_mini_axi.wait_for_halted()
-
+##@cocotb.test()
+##async def core_mark(dut):
+##    """coremark test"""
+##    log = cocotb.log
+##    log.info("Running coremark1 test")
+##    core_mini_axi = CoreMiniAxiInterface(dut)
+##    await core_mini_axi.init()
+##    await core_mini_axi.reset()
+##    cocotb.start_soon(core_mini_axi.clock.start())
+##
+##    with open("../tests/cocotb/coremark/printf_example.elf", "rb") as f:
+##        entry_point = await core_mini_axi.load_elf(f)
+##        await core_mini_axi.execute_from(entry_point)
+##        await core_mini_axi.wait_for_halted()
+##
 ##@cocotb.test()
 ##async def core_timer(dut):
 ##    """timer test"""
